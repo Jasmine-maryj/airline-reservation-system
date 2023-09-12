@@ -20,7 +20,6 @@ public class FlightDto {
     private int availableSeats;
     private Date arrivalTime;
     private Date departureTime;
-    private Airport departureAirport;
 
     @OneToMany(mappedBy = "flight")
     private Set<Booking> bookings = new HashSet<>();

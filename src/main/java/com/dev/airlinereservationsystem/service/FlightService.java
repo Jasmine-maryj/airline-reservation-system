@@ -24,7 +24,6 @@ public class FlightService {
         flight.setDestination(flightDto.getDestination());
         flight.setArrivalTime(flightDto.getArrivalTime());
         flight.setDepartureTime(flightDto.getDepartureTime());
-        flight.setDepartureAirport(flightDto.getDepartureAirport());
 
         flightRepository.save(flight);
     }
@@ -45,7 +44,6 @@ public class FlightService {
         flight.setDestination(updatedFlightDto.getDestination());
         flight.setArrivalTime(updatedFlightDto.getArrivalTime());
         flight.setDepartureTime(updatedFlightDto.getDepartureTime());
-        flight.setDepartureAirport(updatedFlightDto.getDepartureAirport());
 
         flightRepository.save(flight);
     }
