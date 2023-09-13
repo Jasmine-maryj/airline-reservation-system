@@ -1,6 +1,5 @@
 package com.dev.airlinereservationsystem.dto;
 
-import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.entity.Booking;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;

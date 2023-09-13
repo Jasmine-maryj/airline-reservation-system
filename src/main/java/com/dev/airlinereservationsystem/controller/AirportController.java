@@ -4,6 +4,7 @@ import com.dev.airlinereservationsystem.dto.AirportDto;
 import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class AirportController {
     @PostMapping("/add")
     public ResponseEntity<Airport> addAirport(@RequestBody AirportDto airportDto) {
         Airport addedAirport = airportService.addAirport(airportDto);
-        return ResponseEntity.ok(addedAirport);
+        return new ResponseEntity<>(addedAirport, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

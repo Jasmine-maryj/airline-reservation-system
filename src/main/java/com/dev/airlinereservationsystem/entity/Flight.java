@@ -24,6 +24,10 @@ public class Flight {
     private Date arrivalTime;
     private Date departureTime;
 
+    @ManyToOne
+    @JoinColumn(name = "departure_airport_id")
+    private Airport departureAirport;
+
     @OneToMany(mappedBy = "flight")
     private Set<Booking> bookings = new HashSet<>();
 }

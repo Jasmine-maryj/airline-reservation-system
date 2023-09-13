@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class BookingService {
@@ -51,7 +49,7 @@ public class BookingService {
 
     public List<Integer> getAvailableSeats(Flight flight) {
         List<Integer> availableSeats = new ArrayList<>();
-        int totalSeats = flightRepository.findAvailableSeatsByFlight(flight);
+        int totalSeats = flightRepository.findAvailableSeatsByFlight(flight.getId());
         for (int seatNumber = 1; seatNumber <= totalSeats; seatNumber++) {
             boolean isSeatAvailable = isSeatAvailable(flight, seatNumber);
             if (isSeatAvailable) {

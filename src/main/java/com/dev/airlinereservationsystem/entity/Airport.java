@@ -1,10 +1,12 @@
 package com.dev.airlinereservationsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +21,7 @@ public class Airport {
     private String location;
     private String code;
 
-    @OneToMany(mappedBy = "departureAirport")
-    private List<Flight> departingFlights;
+    @OneToMany(mappedBy = "departureAirport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Flight> departingFlights = new ArrayList<>();
 }
