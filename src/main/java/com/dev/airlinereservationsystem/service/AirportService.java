@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AirportService {
@@ -34,6 +35,7 @@ public class AirportService {
                 flight.setAvailableSeats(flightDto.getAvailableSeats());
                 flight.setArrivalTime(flightDto.getArrivalTime());
                 flight.setDepartureTime(flightDto.getDepartureTime());
+                flight.setFlightNumber(UUID.randomUUID().toString());
                 flight.setDepartureAirport(airport); // Set the departure airport
                 departingFlights.add(flight);
             }
@@ -65,5 +67,9 @@ public class AirportService {
         }catch (Exception exception){
             throw new ResourceNotFoundException("Resource Not Found");
         }
+    }
+
+    public void deleteAllAirport() {
+        airportRepository.deleteAll();
     }
 }

@@ -1,6 +1,7 @@
 package com.dev.airlinereservationsystem.service;
 
 import com.dev.airlinereservationsystem.dto.FlightDto;
+import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.entity.Flight;
 import com.dev.airlinereservationsystem.handler.ResourceNotFoundException;
 import com.dev.airlinereservationsystem.repository.FlightRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightService {
@@ -53,5 +55,22 @@ public class FlightService {
         if(flight != null){
             flightRepository.deleteById(id);
         }
+    }
+
+    public List<FlightDto> getFlightByAirport(Airport addedAirport) {
+        List<Flight> flights = flightRepository.findByDepartureAirport(addedAirport);
+        return flights.stream().map(this::mapToFlightDTO).toList();
+    }
+
+    private FlightDto mapToFlightDTO(Flight flight) {
+
+        FlightDto flightDto = new FlightDto();
+        flightDto.setOrigin(flight.getOrigin());
+        flightDto.setDestination(flight.getDestination());
+        flightDto.setArrivalTime(flight.getArrivalTime());
+        flightDto.setDepartureTime(flight.getDepartureTime());
+        flightDto.setBookings(flight.getBookings());
+        flightDto.setFlightNumber(flight.getFlightNumber());
+        return flightDto;
     }
 }
