@@ -12,14 +12,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/flights")
+@CrossOrigin("*")
 public class FlightController {
 
     @Autowired
     private FlightService flightService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addFlight(@RequestBody FlightDto flightDto){
-        flightService.addFlight(flightDto);
+    public ResponseEntity<String> addFlight(@RequestBody FlightDto flightDto, @RequestParam String code){
+        flightService.addFlight(flightDto, code);
         return new ResponseEntity<>("Flight added successfully", HttpStatus.CREATED);
     }
 

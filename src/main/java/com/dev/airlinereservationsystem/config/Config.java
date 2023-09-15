@@ -27,23 +27,23 @@ public class Config {
         return httpSecurity.build();
     }
 
-    @Bean
-    public CorsFilter corsFilter(){
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("http://localhost:3000");
-
-        configuration.addAllowedMethod("GET");
-        configuration.addAllowedMethod("POST");
-        configuration.addAllowedMethod("PUT");
-        configuration.addAllowedMethod("DELETE");
-
-        configuration.addAllowedHeader("Origin");
-        configuration.addAllowedHeader("Authorization");
-
-        source.registerCorsConfiguration("/**", configuration);
-
-        return new CorsFilter(source);
-    }
+//    @Bean
+//    public CorsFilter corsFilter(){
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.addAllowedOrigin("http://localhost:3000");
+//
+//        configuration.addAllowedMethod("GET");
+//        configuration.addAllowedMethod("POST");
+//        configuration.addAllowedMethod("PUT");
+//        configuration.addAllowedMethod("DELETE");
+//
+//        configuration.addAllowedHeader("Origin");
+//        configuration.addAllowedHeader("Authorization");
+//
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return new CorsFilter(source);
+//    }
 }

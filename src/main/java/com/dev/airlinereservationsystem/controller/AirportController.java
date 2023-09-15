@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/airports")
 @Slf4j
+@CrossOrigin("*")
 public class AirportController {
 
     @Autowired

@@ -4,11 +4,13 @@ import com.dev.airlinereservationsystem.dto.FlightDto;
 import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.entity.Flight;
 import com.dev.airlinereservationsystem.handler.ResourceNotFoundException;
+import com.dev.airlinereservationsystem.repository.AirportRepository;
 import com.dev.airlinereservationsystem.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -18,15 +20,26 @@ public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
-    public void addFlight(FlightDto flightDto) {
+    @Autowired
+    private AirportRepository airportRepository;
+
+    public void addFlight(FlightDto flightDto, String code) {
+        Optional<Airport> airportOptional = airportRepository.findByCode(code);
+        if (airportOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+
+        // Create a new Flight entity
         Flight flight = new Flight();
-        flight.setFlightNumber(UUID.randomUUID().toString());
-        flight.setAvailableSeats(flightDto.getAvailableSeats());
         flight.setOrigin(flightDto.getOrigin());
         flight.setDestination(flightDto.getDestination());
+        flight.setAvailableSeats(flightDto.getAvailableSeats());
         flight.setArrivalTime(flightDto.getArrivalTime());
         flight.setDepartureTime(flightDto.getDepartureTime());
+        flight.setFlightNumber(UUID.randomUUID().toString());
+        flight.setDepartureAirport(airportOptional.get());
 
+        // Save the flight
         flightRepository.save(flight);
     }
 
@@ -71,6 +84,7 @@ public class FlightService {
         flightDto.setDepartureTime(flight.getDepartureTime());
         flightDto.setBookings(flight.getBookings());
         flightDto.setFlightNumber(flight.getFlightNumber());
+        flightDto.setAvailableSeats(flight.getAvailableSeats());
         return flightDto;
     }
 }
