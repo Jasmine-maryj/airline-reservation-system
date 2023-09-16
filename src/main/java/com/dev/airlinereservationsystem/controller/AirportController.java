@@ -11,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/airports")
@@ -83,10 +85,25 @@ public class AirportController {
         }
         return ResponseEntity.ok(airport);
     }
+    @PutMapping("/update")
+    public ResponseEntity<Airport> updateAirport(@RequestBody AirportDto updatedAirport, @RequestParam String code) {
+        Airport airport = airportService.updateAirportByCode(code, updatedAirport);
+        if (airport == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(airport);
+    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAirport(@PathVariable Long id) {
-        airportService.deleteAirport(id);
+    @GetMapping("/get/{code}")
+    public ResponseEntity<Airport> getAirportByCode(@PathVariable String code){
+        Airport airport = airportService.getAirportByCode(code);
+        return ResponseEntity.ok(airport);
+    }
+
+    @DeleteMapping("/{airportCode}")
+    @Transactional
+    public ResponseEntity<String> deleteAirport(@PathVariable String airportCode) {
+        airportService.deleteAirportByAirportCode(airportCode);
         return ResponseEntity.ok("Airport deleted successfully.");
     }
 
@@ -95,4 +112,11 @@ public class AirportController {
         airportService.deleteAllAirport();
         return ResponseEntity.ok("Airports deleted successfully.");
     }
+
+    @DeleteMapping("/{airportCode}/flights/{flightNumber}")
+    public ResponseEntity<String> removeFlightFromAirport(@PathVariable String airportCode, @PathVariable String flightNumber) {
+        airportService.removeFlightFromAirport(airportCode, flightNumber);
+        return ResponseEntity.ok("Flight removed from airport successfully");
+    }
+
 }

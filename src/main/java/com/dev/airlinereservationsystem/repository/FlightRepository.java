@@ -14,4 +14,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     int findAvailableSeatsByFlight(long flight);
 
     List<Flight> findByDepartureAirport(Airport addedAirport);
+
+    Flight findByFlightNumber(String flightNumber);
 }

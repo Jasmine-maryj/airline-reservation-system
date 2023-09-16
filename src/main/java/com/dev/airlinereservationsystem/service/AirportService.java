@@ -6,18 +6,25 @@ import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.entity.Flight;
 import com.dev.airlinereservationsystem.handler.ResourceNotFoundException;
 import com.dev.airlinereservationsystem.repository.AirportRepository;
+import com.dev.airlinereservationsystem.repository.FlightRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class AirportService {
 
     @Autowired
     private AirportRepository airportRepository;
+
+    @Autowired
+    private FlightRepository flightRepository;
 
     public Airport addAirport(AirportDto airportDto) {
         Airport airport = new Airport();
@@ -71,5 +78,40 @@ public class AirportService {
 
     public void deleteAllAirport() {
         airportRepository.deleteAll();
+    }
+
+    public Airport updateAirportByCode(String code, AirportDto updatedAirport) {
+        Airport airport = airportRepository.findByCode(code).orElseThrow(()-> new ResourceNotFoundException("Airport not found"));
+        airport.setName(updatedAirport.getName());
+        airport.setLocation(updatedAirport.getLocation());
+        airport.setCode(updatedAirport.getCode());
+        return airportRepository.save(airport);
+    }
+
+    public Airport getAirportByCode(String code) {
+        return airportRepository.findByCode(code).orElseThrow(()-> new ResourceNotFoundException("Resource Not Found"));
+    }
+
+    public void deleteAirportByAirportCode(String airportCode) {
+        airportRepository.deleteByCode(airportCode);
+    }
+
+    public Optional<Airport> findByAirportCode(String airportCode) {
+        return airportRepository.findByCode(airportCode);
+    }
+
+    public void saveAirport(Airport airport) {
+        airportRepository.save(airport);
+    }
+
+    public void removeFlightFromAirport(String airportCode, String flightNumber) {
+        Airport airport = airportRepository.findByCode(airportCode).orElse(null);
+        List<Flight> flights = airport.getDepartingFlights();
+        for(Flight flight : flights){
+            if(flight.getFlightNumber().equalsIgnoreCase(flightNumber)){
+                log.info(flight+"");
+                flightRepository.delete(flight);
+            }
+        }
     }
 }

@@ -19,6 +19,8 @@ public class Airport {
     private long id;
     private String name;
     private String location;
+
+    @Column(name = "code")
     private String code;
 
     @OneToMany(mappedBy = "departureAirport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

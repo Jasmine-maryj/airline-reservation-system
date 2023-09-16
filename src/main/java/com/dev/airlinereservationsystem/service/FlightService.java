@@ -87,4 +87,28 @@ public class FlightService {
         flightDto.setAvailableSeats(flight.getAvailableSeats());
         return flightDto;
     }
+
+    public void updateFlightWithFlightNumber(FlightDto updatedFlightDto, String flightNumber) {
+        Flight flight = flightRepository.findByFlightNumber(flightNumber);
+
+        flight.setAvailableSeats(updatedFlightDto.getAvailableSeats());
+        flight.setOrigin(updatedFlightDto.getOrigin());
+        flight.setDestination(updatedFlightDto.getDestination());
+        flight.setArrivalTime(updatedFlightDto.getArrivalTime());
+        flight.setDepartureTime(updatedFlightDto.getDepartureTime());
+
+        flightRepository.save(flight);
+    }
+
+    public Flight getFlightByFlightNumber(String flightNumber) {
+        return flightRepository.findByFlightNumber(flightNumber);
+    }
+
+    public Optional<Flight> findByFlightNumber(String flightNumber) {
+        return Optional.ofNullable(flightRepository.findByFlightNumber(flightNumber));
+    }
+
+    public void deleteFlight(Flight flight) {
+        flightRepository.delete(flight);
+    }
 }

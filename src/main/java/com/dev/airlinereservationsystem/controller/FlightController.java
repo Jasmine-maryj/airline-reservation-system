@@ -38,10 +38,24 @@ public class FlightController {
         }
         return ResponseEntity.ok(flight);
     }
+    @GetMapping("/get/{flightNumber}")
+    public ResponseEntity<Flight> getFlightById(@PathVariable String flightNumber) {
+        Flight flight = flightService.getFlightByFlightNumber(flightNumber);
+        if (flight == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(flight);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateFlight(@PathVariable Long id, @RequestBody FlightDto updatedFlightDto) {
         flightService.updateFlight(id, updatedFlightDto);
+        return ResponseEntity.ok("Flight updated successfully.");
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateFlight(@RequestBody FlightDto updatedFlightDto, @RequestParam String flightNumber) {
+        flightService.updateFlightWithFlightNumber(updatedFlightDto, flightNumber);
         return ResponseEntity.ok("Flight updated successfully.");
     }
 
