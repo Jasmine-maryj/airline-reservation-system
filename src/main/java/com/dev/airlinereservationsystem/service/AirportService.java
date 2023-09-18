@@ -104,14 +104,18 @@ public class AirportService {
         airportRepository.save(airport);
     }
 
-    public void removeFlightFromAirport(String airportCode, String flightNumber) {
-        Airport airport = airportRepository.findByCode(airportCode).orElse(null);
-        List<Flight> flights = airport.getDepartingFlights();
-        for(Flight flight : flights){
-            if(flight.getFlightNumber().equalsIgnoreCase(flightNumber)){
-                log.info(flight+"");
-                flightRepository.delete(flight);
+    public void removeFlightFromAirport(String flightNumber) {
+        Flight flight = flightRepository.findByFlightNumber(flightNumber);
+
+        if (flight != null) {
+            Airport airport = flight.getDepartureAirport();
+            if (airport != null) {
+                airport.getDepartingFlights().remove(flight);
+                airportRepository.save(airport);
             }
+            flightRepository.delete(flight);
+        } else {
+            throw new ResourceNotFoundException("Resource Not Found");
         }
     }
 }

@@ -88,9 +88,11 @@ public class AirportController {
     @PutMapping("/update")
     public ResponseEntity<Airport> updateAirport(@RequestBody AirportDto updatedAirport, @RequestParam String code) {
         Airport airport = airportService.updateAirportByCode(code, updatedAirport);
+        log.info("Airport value{}",airport);
         if (airport == null) {
             return ResponseEntity.notFound().build();
         }
+//        log.info(airport+"the airport value"+airport);
         return ResponseEntity.ok(airport);
     }
 
@@ -113,10 +115,6 @@ public class AirportController {
         return ResponseEntity.ok("Airports deleted successfully.");
     }
 
-    @DeleteMapping("/{airportCode}/flights/{flightNumber}")
-    public ResponseEntity<String> removeFlightFromAirport(@PathVariable String airportCode, @PathVariable String flightNumber) {
-        airportService.removeFlightFromAirport(airportCode, flightNumber);
-        return ResponseEntity.ok("Flight removed from airport successfully");
-    }
+
 
 }

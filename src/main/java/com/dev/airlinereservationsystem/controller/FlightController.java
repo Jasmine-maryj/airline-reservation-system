@@ -64,4 +64,10 @@ public class FlightController {
         flightService.deleteFlight(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
+
+    @DeleteMapping("/delete/{flightNumber}")
+    public ResponseEntity<String> removeFlightFromAirport(@PathVariable String flightNumber) {
+        flightService.removeFlightFromAirport(flightNumber);
+        return ResponseEntity.ok("Flight removed from airport successfully");
+    }
 }
