@@ -43,14 +43,14 @@ public class BookingController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Booking> updateBooking(@PathVariable Long id, @RequestBody Booking updatedBooking) {
-        Booking booking = bookingService.updateBooking(id, updatedBooking);
+    public ResponseEntity<Booking> updateBooking(@PathVariable String bookingNumber, @RequestBody Booking updatedBooking) {
+        Booking booking = bookingService.updateBooking(bookingNumber, updatedBooking);
         return ResponseEntity.ok(booking);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
-        bookingService.deleteBooking(id);
+    @DeleteMapping("/{bookingNumber}")
+    public ResponseEntity<String> deleteBooking(@PathVariable String bookingNumber) {
+        bookingService.deleteBooking(bookingNumber);
         return ResponseEntity.ok("Booking deleted successfully.");
     }
 

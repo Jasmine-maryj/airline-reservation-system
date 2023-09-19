@@ -78,8 +78,8 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
-    public Booking updateBooking(Long id, Booking updatedBooking) {
-        Booking booking = this.getBookingById(id);
+    public Booking updateBooking(String bookingNumber, Booking updatedBooking) {
+        Booking booking = bookingRepository.findByBookingNumber(bookingNumber);
         if(updatedBooking.getBookingStatus().equals(BookingStatus.CANCELED)){
             booking = cancelReservation(booking);
         }
@@ -95,9 +95,9 @@ public class BookingService {
         }
     }
 
-    public void deleteBooking(Long id) {
+    public void deleteBooking(String bookingNumber) {
         try{
-            bookingRepository.deleteById(id);
+            bookingRepository.deleteByBookingNumber(bookingNumber);
         }catch (Exception ex){
             throw new ResourceNotFoundException("Booking Not Found");
         }

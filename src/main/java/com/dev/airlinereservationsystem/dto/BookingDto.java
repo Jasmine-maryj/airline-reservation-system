@@ -1,5 +1,6 @@
 package com.dev.airlinereservationsystem.dto;
 
+import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.entity.Flight;
 import com.dev.airlinereservationsystem.entity.User;
 import lombok.AllArgsConstructor;
@@ -17,4 +18,5 @@ public class BookingDto {
     private int seatNumber;
     private User user;
     private Flight flight;
+    private Airport airport;
 }

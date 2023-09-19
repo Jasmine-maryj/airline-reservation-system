@@ -25,6 +25,8 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
+    private Airport airport;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
