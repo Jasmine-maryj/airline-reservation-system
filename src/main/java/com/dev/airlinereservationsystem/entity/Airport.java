@@ -9,18 +9,23 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "airport")
+@Entity
 public class Airport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "location")
     private String location;
 
-    @Column(name = "code")
+    @Column(name = "code", columnDefinition = "VARCHAR(255)")
     private String code;
 
     @OneToMany(mappedBy = "departureAirport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

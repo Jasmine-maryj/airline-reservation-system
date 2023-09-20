@@ -6,6 +6,7 @@ import com.dev.airlinereservationsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class UserService {
@@ -25,5 +26,15 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
         return "register successfully!";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "logout";
     }
 }

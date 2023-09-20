@@ -18,5 +18,4 @@ public class BookingDto {
     private int seatNumber;
     private User user;
     private Flight flight;
-    private Airport airport;
 }

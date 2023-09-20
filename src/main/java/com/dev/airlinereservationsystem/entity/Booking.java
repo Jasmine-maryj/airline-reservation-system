@@ -25,8 +25,6 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    private Airport airport;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,4 +32,8 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "flight_id")
     private Flight flight;
+
+    @ManyToOne // Many bookings can be associated with one departure airport
+    @JoinColumn(name = "departure_airport_id") // This column will be created in the Booking table
+    private Airport departureAirport;
 }
