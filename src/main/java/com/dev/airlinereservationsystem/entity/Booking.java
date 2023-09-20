@@ -20,14 +20,9 @@ public class Booking {
     private long id;
     private String bookingNumber;
     private Date bookingDate;
-    private int seatNumber;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
