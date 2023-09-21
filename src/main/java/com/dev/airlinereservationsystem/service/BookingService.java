@@ -66,66 +66,27 @@ public class BookingService {
         bookingDtoResponse.setDestination(booking.getFlight().getDestination());
         bookingDtoResponse.setArrivalTime(booking.getFlight().getArrivalTime());
         bookingDtoResponse.setDepartureTime(booking.getFlight().getDepartureTime());
-        bookingDtoResponse.setStatus(String.valueOf(BookingStatus.RESERVED));
+        bookingDtoResponse.setStatus(String.valueOf(booking.getBookingStatus()));
         bookingDtoResponse.setBookingDate(booking.getBookingDate());
         bookingDtoResponse.setBookingNumber(booking.getBookingNumber());
         return bookingDtoResponse;
     }
 
+    public void cancelBooking(String bookingNumber) {
+        Booking booking = bookingRepository.findByBookingNumber(bookingNumber);
+        if(!booking.getBookingStatus().equals(BookingStatus.RESERVED)){
+            throw new InvalidCancellationException("Flight Cannot be cancelled");
+        }
+        booking.setBookingStatus(BookingStatus.CANCELED);
+        bookingRepository.save(booking);
+    }
 
-//    public List<Integer> getAvailableSeats(Flight flight) {
-//        List<Integer> availableSeats = new ArrayList<>();
-//        int totalSeats = flightRepository.findAvailableSeatsByFlight(flight.getId());
-//        for (int seatNumber = 1; seatNumber <= totalSeats; seatNumber++) {
-//            boolean isSeatAvailable = isSeatAvailable(flight, seatNumber);
-//            if (isSeatAvailable) {
-//                availableSeats.add(seatNumber);
-//            }
-//        }
-//        return availableSeats;
-//    }
-//
-//    private boolean isSeatAvailable(Flight flight, int seatNumber) {
-//        Booking booking = bookingRepository.findByFlightAndSeatNumberAndBookingStatus(flight, seatNumber, BookingStatus.RESERVED);
-//        return booking == null;
-//    }
-//
-////    private boolean hasUserBookedFlight(User user, Flight flight){
-////        List<Booking> bookings = bookingRepository.findByUserAndFlight(user, flight);
-////        return bookings.stream().anyMatch(booking -> booking.getFlight().equals(flight));
-////    }
-//
-//    public Booking getBookingById(Long id) {
-//        Booking booking = bookingRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Booking Not found"));
-//        return booking;
-//    }
-//
-//    public List<Booking> getAllBookings() {
-//        return bookingRepository.findAll();
-//    }
-//
-//    public Booking updateBooking(String bookingNumber, Booking updatedBooking) {
-//        Booking booking = bookingRepository.findByBookingNumber(bookingNumber);
-//        if(updatedBooking.getBookingStatus().equals(BookingStatus.CANCELED)){
-//            booking = cancelReservation(booking);
-//        }
-//        return booking;
-//    }
-//
-//    private Booking cancelReservation(Booking booking) {
-//        if (booking.getBookingStatus() == BookingStatus.RESERVED) {
-//            booking.setBookingStatus(BookingStatus.CANCELED);
-//            return bookingRepository.save(booking);
-//        } else {
-//            throw new InvalidCancellationException("This booking cannot be canceled.");
-//        }
-//    }
-//
-//    public void deleteBooking(String bookingNumber) {
-//        try{
-//            bookingRepository.deleteByBookingNumber(bookingNumber);
-//        }catch (Exception ex){
-//            throw new ResourceNotFoundException("Booking Not Found");
-//        }
-//    }
+    public void deleteBooking(String bookingNumber) {
+        Booking booking = bookingRepository.findByBookingNumber(bookingNumber);
+        if(booking != null && booking.getBookingStatus().equals(BookingStatus.CANCELED)){
+            bookingRepository.delete(booking);
+        }else {
+            throw new ResourceNotFoundException("Resource Not Found");
+        }
+    }
 }

@@ -68,14 +68,6 @@ public class AirportService {
         return airportRepository.save(airport);
     }
 
-    public void deleteAirport(Long id) {
-        try{
-            airportRepository.deleteById(id);
-        }catch (Exception exception){
-            throw new ResourceNotFoundException("Resource Not Found");
-        }
-    }
-
     public void deleteAllAirport() {
         airportRepository.deleteAll();
     }
@@ -96,26 +88,4 @@ public class AirportService {
         airportRepository.deleteByCode(airportCode);
     }
 
-    public Optional<Airport> findByAirportCode(String airportCode) {
-        return airportRepository.findByCode(airportCode);
-    }
-
-    public void saveAirport(Airport airport) {
-        airportRepository.save(airport);
-    }
-
-    public void removeFlightFromAirport(String flightNumber) {
-        Flight flight = flightRepository.findByFlightNumber(flightNumber);
-
-        if (flight != null) {
-            Airport airport = flight.getDepartureAirport();
-            if (airport != null) {
-                airport.getDepartingFlights().remove(flight);
-                airportRepository.save(airport);
-            }
-            flightRepository.delete(flight);
-        } else {
-            throw new ResourceNotFoundException("Resource Not Found");
-        }
-    }
 }

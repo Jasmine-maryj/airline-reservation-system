@@ -4,7 +4,6 @@ import com.dev.airlinereservationsystem.dto.AirportDto;
 import com.dev.airlinereservationsystem.dto.AirportWithFlightsDto;
 import com.dev.airlinereservationsystem.dto.FlightDto;
 import com.dev.airlinereservationsystem.entity.Airport;
-import com.dev.airlinereservationsystem.entity.Flight;
 import com.dev.airlinereservationsystem.service.AirportService;
 import com.dev.airlinereservationsystem.service.FlightService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/airports")
@@ -92,7 +90,6 @@ public class AirportController {
         if (airport == null) {
             return ResponseEntity.notFound().build();
         }
-//        log.info(airport+"the airport value"+airport);
         return ResponseEntity.ok(airport);
     }
 

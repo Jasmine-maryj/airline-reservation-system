@@ -28,6 +28,24 @@ public class Flight {
     @JoinColumn(name = "departure_airport_id")
     private Airport departureAirport;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.REMOVE)
     private Set<Booking> bookings = new HashSet<>();
+
+    public Flight(String origin, String destination,int availableSeats, Date arrivalTime, Date departureTime, Airport airport) {
+        this.origin = origin;
+        this.destination = destination;
+        this.availableSeats =  availableSeats;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.departureAirport = airport;
+    }
+    public Flight(String flightNumber, String origin, String destination,int availableSeats, Date arrivalTime, Date departureTime, Airport airport) {
+        this.flightNumber = flightNumber;
+        this.origin = origin;
+        this.destination = destination;
+        this.availableSeats =  availableSeats;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.departureAirport = airport;
+    }
 }
