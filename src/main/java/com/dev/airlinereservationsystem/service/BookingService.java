@@ -5,32 +5,23 @@ import com.dev.airlinereservationsystem.dto.BookingDtoResponse;
 import com.dev.airlinereservationsystem.entity.Airport;
 import com.dev.airlinereservationsystem.entity.Booking;
 import com.dev.airlinereservationsystem.entity.Flight;
-import com.dev.airlinereservationsystem.entity.User;
-import com.dev.airlinereservationsystem.handler.AlreadyBookedException;
 import com.dev.airlinereservationsystem.handler.InvalidCancellationException;
 import com.dev.airlinereservationsystem.handler.ResourceNotFoundException;
 import com.dev.airlinereservationsystem.repository.BookingRepository;
 import com.dev.airlinereservationsystem.repository.FlightRepository;
-import com.dev.airlinereservationsystem.repository.UserRepository;
 import com.dev.airlinereservationsystem.util.BookingStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
 
     @Autowired
     private BookingRepository bookingRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     private FlightRepository flightRepository;
 

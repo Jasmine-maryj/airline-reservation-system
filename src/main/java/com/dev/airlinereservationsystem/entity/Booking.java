@@ -28,7 +28,7 @@ public class Booking {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @ManyToOne // Many bookings can be associated with one departure airport
-    @JoinColumn(name = "departure_airport_id") // This column will be created in the Booking table
+    @ManyToOne
+    @JoinColumn(name = "departure_airport_id")
     private Airport departureAirport;
 }

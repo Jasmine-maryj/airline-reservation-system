@@ -102,4 +102,19 @@ public class FlightService {
     public Flight getFlightByFlightNumber(String flightNumber) {
         return flightRepository.findByFlightNumber(flightNumber);
     }
+
+    public void removeFlightFromAirport(String flightNumber) {
+        Flight flight = flightRepository.findByFlightNumber(flightNumber);
+
+        if (flight != null) {
+            Airport airport = flight.getDepartureAirport();
+            if (airport != null) {
+                airport.getDepartingFlights().remove(flight);
+                airportRepository.save(airport);
+            }
+            flightRepository.delete(flight);
+        } else {
+            throw new ResourceNotFoundException("Resource Not Found");
+        }
+    }
 }

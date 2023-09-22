@@ -112,6 +112,4 @@ public class AirportController {
         return ResponseEntity.ok("Airports deleted successfully.");
     }
 
-
-
 }
